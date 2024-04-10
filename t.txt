@@ -1,0 +1,197 @@
+# import pdfplumber
+# import re
+
+
+# with pdfplumber.open('2.pdf') as pdf:
+#     pages = pdf.pages
+#     text = ""
+#     for page in pages:
+#         text += page.extract_text()
+
+
+# print(text)        
+# # .................................................................
+# # EH reference number
+# # eh_reference_number = re.search(r'EH reference number\s*:\s*(\d{10})', text)
+# # if eh_reference_number:
+# #     eh_reference_number = eh_reference_number.group(1)
+
+# # # Euler number
+# # euler_number = re.search(r'Euler N°:\s*(\d{10})', text)
+# # if euler_number:
+# #     euler_number = euler_number.group(1)
+
+# # # Telephone number
+# # telephone_number = re.search(r'Telephone\s*:\s*\((\d{3})\) (\d{1,2} \d{3} \d{4})', text)
+# # if telephone_number:
+# #     telephone_number = telephone_number.group(0)
+
+# # print("EH reference number:", eh_reference_number)
+# # print("Euler number:", euler_number)
+# # print("Telephone number:", telephone_number)
+# # .........................................................................
+
+
+
+# # Define regular expressions
+# eh_reference_regex = r'\bEH reference number\s*:\s*(\d{10})\b'
+# euler_regex = r'\bEuler N°\s*:\s*(\d{10})\b'
+# telephone_regex = r'Telephone\s*:\s*\((\d{3})\) (\d{1,2} \d{3} \d{4})'
+
+# # Define function to extract information from a file
+# def extract_info_from_file(file_text):
+#     # EH reference number
+#     eh_reference_number = re.search(eh_reference_regex, file_text)
+#     eh_reference_number = eh_reference_number.group(1) if eh_reference_number else None
+
+#     # Euler number
+#     euler_number = re.search(euler_regex, file_text)
+#     euler_number = euler_number.group(1) if euler_number else None
+
+#     # Telephone number
+#     telephone_number = re.search(telephone_regex, file_text)
+#     telephone_number = telephone_number.group(0) if telephone_number else None
+
+#     return eh_reference_number, euler_number, telephone_number
+
+# # Sample file data
+# file1_text = text
+
+
+# # Extract information from each file
+# eh_reference_file1, euler_number_file1, telephone_number_file1 = extract_info_from_file(file1_text)
+
+# # Print extracted information
+# print("----------------------------------------")
+# print("EH reference number:", eh_reference_file1)
+# print("Euler number:", euler_number_file1)
+# print("Telephone number:", telephone_number_file1)
+# print("----------------------------------------")
+
+# output_file_path = "output.txt"
+# with open(output_file_path, 'a') as output_file:
+#     output_file.write("---------------------------" + "\n")
+#     output_file.write("EH reference number: " + str(eh_reference_file1) + "\n")
+#     output_file.write("Euler number: " + str(euler_number_file1) + "\n")
+#     output_file.write("Telephone number: " + str(telephone_number_file1) + "\n")
+#     output_file.write("-------------------------")
+
+# print("Information written to", output_file_path)
+
+##..................................................................................................
+
+
+# # .............................................................................
+# from pdf2image import convert_from_path
+# from pytesseract import image_to_string
+# import re
+# import pycountry
+
+# # Define regular expressions
+# eh_reference_regex = r'\bEH reference number\s*:\s*(\d{10})\b'
+# euler_regex = r'\bEuler N°\s*:\s*(\d{10})\b'
+# telephone_regex = r'Telephone\s*:\s*\((\d{3})\) (\d{1,2} \d{3} \d{4})'
+
+# # Define function to extract information from a file
+# def extract_info_from_file(file_text):
+#     # EH reference number
+#     eh_reference_number = re.search(eh_reference_regex, file_text)
+#     eh_reference_number = eh_reference_number.group(1) if eh_reference_number else None
+
+#     # Euler number
+#     euler_number = re.search(euler_regex, file_text)
+#     euler_number = euler_number.group(1) if euler_number else None
+
+#     # Telephone number
+#     telephone_number = re.search(telephone_regex, file_text)
+#     telephone_number = telephone_number.group(0) if telephone_number else None
+    
+#    # Date
+#     date_regex = r'\b(\d{1,2}(?:st|nd|rd|th)?(?:\s+\w+)?(?:\s+\d{4})?)\b'
+#     date_match = re.search(date_regex, file_text)
+#     date = date_match.group(1).strip() if date_match else None
+
+#     # Address
+#     address_regex = r"We would like to receive information about the company below:(.*?)(?:Telephone|\b\w+\s*:(?! \d))"
+#     address_match = re.search(address_regex, file_text, re.DOTALL)
+#     address = address_match.group(1).strip() if address_match else None
+
+#     return eh_reference_number, euler_number, telephone_number, address, date
+ 
+# def convert_pdf_to_img(pdf_file):
+#     return convert_from_path(pdf_file)
+
+# def convert_image_to_text(file):
+#     text = image_to_string(file)
+#     return text
+
+# def get_text_from_any_pdf(pdf_file):
+#     images = convert_pdf_to_img(pdf_file)
+#     final_text = ""
+#     for pg, img in enumerate(images):
+#         final_text += convert_image_to_text(img)
+#     return final_text
+
+# path_to_pdf = '6.pdf'
+
+# text = get_text_from_any_pdf(path_to_pdf)
+
+
+
+
+
+
+# eh_reference_file1, euler_number_file1, telephone_number_file1, address_file1, date_file1 = extract_info_from_file(text)
+
+# address_lines = address_file1.strip().split('\n')
+# print(address_lines)
+
+# findcountry = address_lines
+ 
+              
+# def countryfind(address_lines):
+#    for country in pycountry.countries:
+#     if country.name in findcountry:
+#         print(country.name) 
+#         return country.name  
+    
+# country = countryfind(address_lines)               
+
+# # Combine the address lines into a single line without any separators
+# address_combined = "".join(address_lines)
+
+
+# # Print extracted information
+# print("----------------------------------------")
+# print("Date:", date_file1)
+# print("EH reference number:", eh_reference_file1)
+# print("Euler number:", euler_number_file1)
+# print("Phone number:", telephone_number_file1)
+# print("Address:", address_combined)
+# print("country:",  country) 
+# print("----------------------------------------")
+
+
+# # Write extracted information to a file
+# output_file_path = "output.txt"
+# with open(output_file_path, 'a') as output_file:
+#     output_file.write("--------------------------------------------------------------------------------------------------\n")
+#     output_file.write("Date: " + str(date_file1) + "\n")
+#     output_file.write("------\n")
+    
+#     output_file.write("Country: " + str(country) + "\n")
+#     output_file.write("------\n")
+    
+#     output_file.write("EH reference number: " + str(eh_reference_file1) + "\n")
+#     output_file.write("------\n")
+    
+#     output_file.write("Euler number: " + str(euler_number_file1) + "\n")
+#     output_file.write("------\n")
+    
+#     output_file.write("Telephone number: " + str(telephone_number_file1) + "\n")
+#     output_file.write("-------\n")
+    
+#     output_file.write("Address: " + str(address_combined) + "\n")
+#     output_file.write("--------------------------------------------------------------------------------------------------\n")
+
+# print("Information written to", output_file_path)
